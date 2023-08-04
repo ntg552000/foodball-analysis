@@ -1,0 +1,27 @@
+services:
+  fengshui-db:
+    image: mysql:latest
+    container_name: fengshui-db
+    volumes:
+      - /home/ntg552000/fengshui/mysql/docker-volume:/var/lib/mysql
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: 05Thang05.
+      MYSQL_DATABASE: crm
+    ports:
+      - 3306:3306
+    networks:
+      - fengshui-net
+  fengshui-backend:
+    image: ntg552000/fengshui:latest
+    container_name: fengshui-backend
+    networks:
+      - fengshui-net
+    ports:
+      - 1112:1112
+    depends_on:
+      - fengshui-db
+
+networks:
+  fengshui-net:
+   
